@@ -1,0 +1,23 @@
+name: Default
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  default:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: eisengrind/commitlint
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: set script permissions
+        run: chmod +x ./.github/scripts/push.sh
+      - name: login to hub.docker.com
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: push
+        run: ./.github/scripts/push.sh
+      - name: logout from hub.docker.com
+        run: docker logout
