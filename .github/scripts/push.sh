@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HASH=$(date --iso-8601=minutes) | sha1sum | head -c 40
+HASH=$($(date --iso-8601=minutes) | sha1sum | head -c 40)
 SHORT_HASH=$(echo $HASH | cut -c1-8)
 
 docker build -f Dockerfile . $IMAGE:latest
